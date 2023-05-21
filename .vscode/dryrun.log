@@ -1,0 +1,14 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/user/Documents/cowboy_vs_ninja_b'
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources --compile TestRunner.cpp -o TestRunner.o
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources --compile StudentTest1.cpp -o StudentTest1.o
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources --compile sources/Character.cpp -o objects/Character.o
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources --compile sources/Cowboy.cpp -o objects/Cowboy.o
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources --compile sources/Ninja.cpp -o objects/Ninja.o
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources --compile sources/Point.cpp -o objects/Point.o
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources --compile sources/SmartTeam.cpp -o objects/SmartTeam.o
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources --compile sources/Team.cpp -o objects/Team.o
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources --compile sources/Team2.cpp -o objects/Team2.o
+clang++-14 -std=c++2a -Werror -Wsign-conversion -Isources TestRunner.o StudentTest1.o objects/Character.o objects/Cowboy.o objects/Ninja.o objects/Point.o objects/SmartTeam.o objects/Team.o objects/Team2.o -o test
+make: Leaving directory '/home/user/Documents/cowboy_vs_ninja_b'
+ 
