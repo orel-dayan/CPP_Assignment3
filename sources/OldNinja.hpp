@@ -4,13 +4,25 @@
 
 namespace ariel
 {
-    const int OLD_SPEED = 8;
-    const int OLD_INTIAL_HITPOINTS = 150;
+  // Static members
+  const int S_OLD_SPEED = 8;
+  const int S_OLD_INTIAL_HITPOINTS = 150;
 
-    class OldNinja : public Ninja
-    {
-    public:
-        OldNinja(const std::string &name, const Point &location) : Ninja(name, location, OLD_SPEED, OLD_INTIAL_HITPOINTS) {} // NOLINT
-    };
+  /**
+   * @brief The OldNinja class, derived from the Ninja class.
+   *        Represents an old ninja character in the game.
+   */
+
+  class OldNinja : public Ninja
+  {
+  public:
+    /**
+     * @brief Constructs an OldNinja character with the given name and location.
+     *
+     * @param name The name of the old ninja.
+     * @param location The location of the old ninja.
+     */
+    OldNinja(const std::string &name, const Point &location) : Ninja(name, location, S_OLD_SPEED, S_OLD_INTIAL_HITPOINTS) {} // NOLINT
+  };
 
 }

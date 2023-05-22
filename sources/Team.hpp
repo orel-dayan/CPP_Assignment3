@@ -11,54 +11,93 @@
 
 namespace ariel
 {
-    static const int MAX_TEAMMATES = 10;
+	static const int S_MAX_TEAM_SIZE = 10;
 
-    class Team
-    {
-    protected:
-        /**
-         * @brief array of pointers to characters
-         * I prefer to use array instead of vector because it's more efficient here ,
-         *  and the size of the array is constant and
-         *
-         */
-        std::array<Character *, MAX_TEAMMATES> m_teammates; // NOLINT
+	/**
+	 * @brief The Team class represents a team of characters.
+	 *
+	 * It manages a collection of characters and provides functionality for team operations.
+	 */
 
-        Character *m_leader; // NOLINT
+	class Team
+	{
+	protected:
+		/**
+		 * @brief The m_teammates array represents the team members.
+		 * The array is of size S_MAX_TEAM_SIZE.
+		 * The array is initialized to nullptr.
+		 * The array is of type Character*.
+		 */
+		std::array<Character *, S_MAX_TEAM_SIZE> m_teammates; // NOLINT
+		/**
+		 * @brief The m_leader represents the leader of the team.
+		 *
+		 */
+		Character *m_leader; // NOLINT
+		/**
+		 * @brief The m_numsOfTeammate represents the number of teammates in the team.
+		 *
+		 */
 
-        size_t m_numsOfTeammate; // NOLINT
+		size_t m_numsOfTeammate; // NOLINT
 
-        void updateLeader(); // update the leader of the team
+		/**
+		 * @brief update the leader of the team
+		 */
 
-        static Character *getNearestCharacter(const Team *src, const Character *dest); // get the nearest character to the other character
+		void updateLeader();
 
-        Character *closetTarget(Team *enemy) const; // NOLINT
+		/**
+		 *
+		 * @brief // Get the nearest character to the other character
+		 *
+		 * @param src - the team
+		 * @param dest - the other character
+		 * @return Character* - the nearest character to the other character
+		 */
 
-    public:
-        Team(Character *leader); // NOLINT
+		static Character *getNearestCharacter(const Team *src, const Character *dest);
 
-        /**
-         * @brief delete the copy constructor and the move constructor and the assignment operator
-         *
-         */
+		/**
+		 * @brief Find the closest target in the enemy team
+		 *
+		 * @param enemy - the enemy team
+		 * @return Character* - the closest target in the enemy team
+		 */
 
-        Team() = delete;
-        Team(const Team &other) = delete;
-        Team(const Team &&other) = delete;
+		Character *closetTarget(Team *enemy) const; // NOLINT
 
-        Team &operator=(Team &other) = delete;
-        Team &operator=(Team &&other) = delete;
+	public:
+		/**
+		 * @brief Constructs a Team object with the given leader.
+		 *
+		 * @param leader The leader of the team.
+		 */
+		Team(Character *leader); // NOLINT
 
-        virtual ~Team(); // destructor for Team -default implementation
+		/**
+		 * @brief Deletes the copy constructor and move constructor and assignment operators.
+		 *
+		 * This prevents copying and moving of Team objects.
+		 */
 
-        void add(Character *character); // add character to the team
+		Team() = delete;
+		Team(const Team &other) = delete;
+		Team(const Team &&other) = delete;
 
-        virtual void attack(Team *Character); // attack other team
+		Team &operator=(Team &other) = delete;
+		Team &operator=(Team &&other) = delete;
 
-        virtual void print() const; // print the team
+		virtual ~Team(); // destructor for Team -default implementation
 
-        int stillAlive() const; // return the number of alive characters in the team
+		void add(Character *character); // add character to the team
 
-        Character *getTeamMember(size_t numOfMember) const; // get the member in the index of the array
-    };
+		virtual void attack(Team *Character); // attack other team
+
+		virtual void print() const; // print the team
+
+		int stillAlive() const; // return the number of alive characters in the team
+
+		Character *getTeamMember(size_t numOfMember) const; // get the member in the index of the array
+	};
 }

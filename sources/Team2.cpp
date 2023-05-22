@@ -4,39 +4,38 @@ using namespace ariel;
 
 void Team2::print() const
 {
-    for (size_t i = 0; i < MAX_TEAMMATES; i++)
-    {
-        if (m_teammates[i] != nullptr)
-            m_teammates[i]->print();
-    }
+  for (size_t i = 0; i < S_MAX_TEAM_SIZE; i++) // Iterate over the teammates array
+  {
+    if (m_teammates[i] != nullptr) // Check if the current teammate is null
+      m_teammates[i]->print();     // Print the current teammate
+  }
 }
 
 void Team2::attack(Team *enemy)
 {
-    if (enemy == nullptr)
-        throw std::invalid_argument("Error: NULL argument\n");
+  if (enemy == nullptr) // Check if the enemy is null
+    throw std::invalid_argument("Error: NULL argument\n");
 
-    if (!m_leader->isAlive())
-        updateLeader();
+  if (!m_leader->isAlive()) // Check if the leader is alive
+    updateLeader();
 
-    if (m_leader == nullptr)
-        throw std::runtime_error("All the team is already dead");
+  if (m_leader == nullptr) // Check if the leader is null
+    throw std::runtime_error("All the team is already dead");
 
-    Character *closet_character = closetTarget(enemy);
+  Character *cc = closetTarget(enemy);
 
-    if (closet_character == nullptr)
-        throw std::runtime_error("All the enemy team is dead");
+  if (cc == nullptr) // Check if the closet_character is null
+    throw std::runtime_error("All the enemy team is dead");
 
-    size_t i;
-    for (i = 0; i < MAX_TEAMMATES; i++)
-    {
-        if (!closet_character->isAlive())
-            closet_character = closetTarget(enemy);
+  for (size_t i = 0; i < S_MAX_TEAM_SIZE; i++) // Iterate over the teammates array
+  {
+    if (!cc->isAlive()) // Check if the closet_character is alive
+      cc = closetTarget(enemy);
 
-        if (closet_character == nullptr)
-            return;
+    if (cc == nullptr) // Check if the closet_character is null
+      return;
 
-        if (m_teammates[i] != nullptr && m_teammates[i]->isAlive())
-            m_teammates[i]->attack(closet_character);
-    }
+    if (m_teammates[i] != nullptr && m_teammates[i]->isAlive()) // Check if the teammate is null or dead
+      m_teammates[i]->attack(cc);
+  }
 }

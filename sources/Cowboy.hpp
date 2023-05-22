@@ -4,39 +4,76 @@
 namespace ariel
 {
 
-    /**
-     * @brief static members of the class  Cowboy from the introduction of assigment
-     *
-     */
+	// Static members
 
-    static const int MAX_BULLETS = 6;
-    static const int INITAIL_HITPOINTS = 110;
-    static const int DAMAGE = 10;
+	static const int S_MAX_BULLETS = 6;
+	static const int S_INITAIL_HITPOINTS = 110;
+	static const int S_DAMAGE = 10;
 
-    class Cowboy : public Character
-    {
+	/**
+	 * @brief The Cowboy class, derived from the Character class.
+	 *        Represents a cowboy character in the game.
+	 */
 
-    public:
-        int m_bullets;
+	class Cowboy : public Character
+	{
 
-        Cowboy(const std::string &name, const Point &location) : // NOLINT(cppcoreguidelines-pro-type-member-init)
-                                                                 Character(name, location, INITAIL_HITPOINTS),
-                                                                 m_bullets(MAX_BULLETS)
-        {
-            m_location.print(); // print the location of the character
-        }
+	public:
+		int m_bullets; // number of bullets
 
-        std::string print() const override; // print the character
+		/**
+		 * @brief Constructs a Cowboy character with the given name and location.
+		 *
+		 * @param name The name of the cowboy.
+		 * @param location The location of the cowboy.
+		 */
 
-        void shoot(Character *character); // shoot other character
+		Cowboy(const std::string &name, const Point &location) : // NOLINT
+																														 Character(name, location, S_INITAIL_HITPOINTS),
+																														 m_bullets(S_MAX_BULLETS)
+		{
+			m_location.print(); // print the location of the character
+		}
 
-        bool hasboolets() const
-        { // check if the character has bullets
-            return m_bullets > 0;
-        }
+		/**
+		 * @brief Returns a string representation of the Cowboy character.
+		 *
+		 * @return The string representation of the Cowboy character.
+		 */
 
-        void reload(); // reload bullets
+		std::string print() const override;
 
-        void attack(Character *other) override; // attack other character
-    };
-}
+		/**
+		 * @brief Shoots the given enemy character.
+		 *
+		 * @param enemy The enemy character to shoot.
+		 */
+
+		void shoot(Character *character);
+
+		/**
+		 * @brief Checks if the character has bullets.
+		 *
+		 * @return True if the character has bullets, false otherwise.
+		 */
+
+		bool hasboolets() const
+		{
+			return m_bullets > 0;
+		}
+
+		/**
+		 * @brief Reloads bullets for the cowboy.
+		 */
+
+		void reload();
+
+		/**
+		 * @brief Attacks another character.
+		 *
+		 * @param other The character to be attacked.
+		 */
+
+		void attack(Character *other) override;
+	};
+} // namespace ariel

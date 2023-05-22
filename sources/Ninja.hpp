@@ -3,53 +3,66 @@
 
 namespace ariel
 {
+	/**
+   * @brief The Ninja class, derived from the Character class.
+   *        Represents a ninja character in the game.
+   */
 
-    class Ninja : public Character
-    {
+	class Ninja : public Character
+	{
 
-    public:
-        static const int DAMAGE = 40;
+	public:
+		// Static member
+		static const int S_DAMAGE = 40;
 
-    private:
-        int m_speed;
+	private:
+		int m_speed; // speed of the ninja
 
-    protected:
-        Ninja(const std::string &name, const Point &location, int speed, int hitPoints) : // NOLINT
-                                                                                          Character(name, location, hitPoints), m_speed(speed)
-        {
-        }
+	protected:
+		/**
+		 * @brief Constructs a Ninja character with the given name, location, speed, and hit points.
+		 *
+		 * @param name The name of the ninja.
+		 * @param location The location of the ninja.
+		 * @param speed The speed of the ninja.
+		 * @param hitPoints The hit points of the ninja.
+		 */
+		Ninja(const std::string &name, const Point &location, int speed, int hitPoints) : // NOLINT
+																																											Character(name, location, hitPoints), m_speed(speed)
+		{
+		}
 
-    public:
-        /**
-         * @brief print the character
-         *
-         * @return std::string  the character
-         */
+	public:
+		/**
+		 * @brief Returns a string representation of the Ninja character.
+		 *
+		 * @return The string representation of the Ninja character.
+		 */
 
-        std::string print() const override;
+		std::string print() const override;
 
-        /**
-         * @brief move the character to other location
-         *
-         * @param other  the other character
-         */
+		/**
+		 * @brief Moves the ninja towards another character.
+		 *
+		 * @param other The character to move towards.
+		 */
 
-        void move(const Character *other);
+		void move(const Character *other);
 
-        /**
-         * @brief slash other character
-         *
-         * @param other the other character
-         */
+		/**
+		 * @brief Performs a slashing attack on another character.
+		 *
+		 * @param other The character to be slashed.
+		 */
 
-        void slash(Character *other) const;
+		void slash(Character *other) const;
 
-        /**
-         * @brief  attack other character
-         *
-         * @param other the other character
-         */
+		/**
+		 * @brief Attacks another character.
+		 *
+		 * @param other The character to be attacked.
+		 */
 
-        void attack(Character *other) override;
-    };
+		void attack(Character *other) override;
+	};
 }

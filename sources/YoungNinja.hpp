@@ -2,13 +2,25 @@
 #include "Ninja.hpp"
 namespace ariel
 {
-
-    static const int SPEED_YOUNG = 14;
-    static const int INTIAL_HITPOINTS_YOUNG = 100;
+    // Static members
+    static const int S_SPEED_YOUNG = 14;
+    static const int S_INTIAL_HITPOINTS_YOUNG = 100;
+     /**
+     * @brief The YoungNinja class represents a young ninja character.
+     *
+     * It is a derived class from the base class Ninja.
+     */
 
     class YoungNinja : public Ninja
     {
     public:
-        YoungNinja(const std::string &name, const Point &pos) : Ninja(name, pos, SPEED_YOUNG, INTIAL_HITPOINTS_YOUNG) {}
+        /**
+         * @brief Constructs a YoungNinja object with the given name and location.
+         *
+         * @param name The name of the young ninja.
+         * @param Location The location of the young ninja.
+         */
+
+        YoungNinja(const std::string &name, const Point &Location) : Ninja(name, Location, S_SPEED_YOUNG, S_INTIAL_HITPOINTS_YOUNG) {}
     };
 }

@@ -3,13 +3,25 @@
 #include "Ninja.hpp"
 namespace ariel
 {
-    static const int SPEED_TRAINED = 12;
-    static const int INTIAL_HITPOINTS_TRAINED = 120;
+	// Static members
+	static const int S_SPEED_TRAINED = 12;
+	static const int S_INTIAL_HITPOINTS_TRAINED = 120;
+	/**
+	 * @brief The TrainedNinja class represents a trained ninja character.
+	 *
+	 * It is a derived class from the base class Ninja.
+	 */
 
-    class TrainedNinja : public Ninja
-    {
-    public:
-        TrainedNinja(const std::string &name, const Point &pos) : Ninja(name, pos, SPEED_TRAINED,
-                                                                        INTIAL_HITPOINTS_TRAINED) {}
-    };
+	class TrainedNinja : public Ninja
+	{
+	public:
+		/**
+		 * @brief Constructs a TrainedNinja object with the given name and position.
+		 *
+		 * @param name The name of the trained ninja.
+		 * @param pos The position of the trained ninja.
+		 */
+		TrainedNinja(const std::string &name, const Point &Location) : Ninja(name, Location, S_SPEED_TRAINED,
+																																				 S_INTIAL_HITPOINTS_TRAINED) {}
+	};
 }

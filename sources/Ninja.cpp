@@ -17,7 +17,7 @@ std::string Ninja::print() const
         phitpoints = "Hit points: " + std::to_string(m_hitPoints);
     }
 
-    return "Name: N. " + pname + ", " + phitpoints + ", Position: " + m_location.print();
+    return "Name: N. " + pname + ", " + phitpoints + ", Location: " + m_location.print();
 }
 
 void Ninja::move(const Character *enemy)
@@ -54,5 +54,5 @@ void Ninja::slash(Character *enemy) const
         throw std::runtime_error("A character can't attack itself");
 
     if (distance(enemy) <= 1)
-        enemy->hit(DAMAGE);
+        enemy->hit(S_DAMAGE);
 }
