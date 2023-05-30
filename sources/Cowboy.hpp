@@ -32,7 +32,7 @@ namespace ariel
 																														 Character(name, location, S_INITAIL_HITPOINTS),
 																														 m_bullets(S_MAX_BULLETS)
 		{
-			m_location.print(); // print the location of the character
+			this->getLocation().print();
 		}
 
 		/**

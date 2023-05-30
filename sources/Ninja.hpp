@@ -64,5 +64,15 @@ namespace ariel
 		 */
 
 		void attack(Character *other) override;
+
+		/**
+		 * @brief Returns the speed of the ninja.
+		 *
+		 */
+		
+		int getSpeed() const
+		{
+			return m_speed;
+		}
 	};
 }

@@ -4,92 +4,122 @@
 
 using namespace ariel;
 
-Character *SmartTeam::findWeakestOpponent(Team *other) const
+Character *SmartTeam::findVictim(Team *other) const
 {
-    Character *weakest = nullptr;
-    int minHitPoints = std::numeric_limits<int>::max();
+    Character *victim = nullptr;
+    Character *current = nullptr;
+    for (size_t i = 0; i <S_MAX_TEAM_SIZE; i++) {
+        current = other->getTeamMember(i);
+        if (current == nullptr) {
+            break;
+        }
 
-    for (size_t i = 0; i < S_MAX_TEAM_SIZE; i++)
-    {
-        Character *current = other->getTeamMember(i);
-        // Check if the current character is valid and weaker than the current weakest character
-        if (current != nullptr && current->isAlive() && current->getHitPoints() < minHitPoints)
-        {
-            weakest = current;
-            minHitPoints = current->getHitPoints();
+        if ((victim == nullptr || victim->getHitPoints() > current->getHitPoints()) && current->isAlive()) {
+            victim = current;
         }
     }
+    return victim;
 
-    return weakest;
 }
 
 
-void SmartTeam::attack(Team *enemy_team)
-{
-    if (enemy_team == nullptr) // Check if the enemy is null
-        throw std::invalid_argument("Error: NULL argument\n");
+void SmartTeam::attack(Team *enemy_team) {
+    if (enemy_team == nullptr) {
+        throw std::invalid_argument("NULL argument\n");
+    }
 
-    if (!m_leader->isAlive()) // Check if the leader is alive
-        updateLeader();
+    Character *leader =getLeader();
 
-    if (m_leader == nullptr) // Check if the leader is null
-        throw std::runtime_error("Error: All the team is already dead");
+    if (!leader->isAlive()) {
+       updateLeader();
+        leader = getLeader();
+    }
 
-    Character *closet_character = closetTarget(enemy_team);
+    if (leader == nullptr) {
+        throw std::runtime_error("All the team is already dead");
+    }
 
-    if (closet_character == nullptr) // Check if the closet_character is null
-        throw std::runtime_error("Error: All the enemy team is dead");
+    if (enemy_team->stillAlive() == 0) {
+        throw std::runtime_error("All the enemy team is dead");
+    }
 
-    for (size_t i = 0; i < S_MAX_TEAM_SIZE; i++)
-    {
-        if (!closet_character->isAlive())
-            closet_character = closetTarget(enemy_team);
+    Character *closest_ninja = findCloseNinja(enemy_team);
+    Character *weakest = findVictim(enemy_team);
+    Character *teammate = nullptr;
+    Character *closest_to = nullptr;
 
-        if (closet_character == nullptr)
-            return;
+    // Iterate through all team members
+    for (size_t i = 0; i < S_MAX_TEAM_SIZE; i++) {
+        teammate = getTeamMember(i);
+        if (teammate == nullptr || !teammate->isAlive()) {
+            continue;
+        }
 
-        if (m_teammates[i] != nullptr && m_teammates[i]->isAlive())
-            m_teammates[i]->attack(closet_character);
+        // If the teammate is a Cowboy
+        if (typeid(*teammate) == typeid(Cowboy)) {
+            // Attack the closest Ninja if there is one
+            if (closest_ninja != nullptr && closest_ninja->isAlive()) {
+                teammate->attack(closest_ninja);
+            } else {
+                // If there is no close Ninja, attack the weakest enemy
+                weakest = weakest->isAlive() ? weakest : findVictim(enemy_team);
+                if (weakest != nullptr && weakest->isAlive()) {
+                    teammate->attack(weakest);
+                }
+            }
+        } else { // If the teammate is not a Cowboy
+            // Attack the closest enemy with a higher priority for Cowboys
+            closest_to = getNearestCharacter(enemy_team, teammate);
+            if (closest_to != nullptr && closest_to->isAlive()) {
+                teammate->attack(closest_to);
+            }
+        }
     }
 }
+
 
 void SmartTeam::print() const
 {
-    for (size_t i = 0; i < S_MAX_TEAM_SIZE; i++)
+    for (size_t i = 0; i < S_MAX_TEAM_SIZE; i++) // Iterate over the teammates array
     {
-        if (m_teammates[i] != nullptr)
-            m_teammates[i]->print();
+        Character *member = getTeamMember(i); // Get the current member
+        if(member != nullptr)
+           std::cout << member->print(); // Print the member
+
     }
 }
 
-
-
 Character *SmartTeam::findCloseNinja(Team *other) const
 {
-    Character *closest = nullptr;
+   Character *closest = nullptr;
     Character *minDistance = nullptr;
     Character *current = nullptr;
 
-    for (size_t i = 0; i < S_MAX_TEAM_SIZE; i++)
-    {
+    for (size_t i = 0; i < S_MAX_TEAM_SIZE; i++) {
         current = other->getTeamMember(i);
-
-        if (current != nullptr && typeid(*current) == typeid(Cowboy))
-        {
-            Character *tmp = other->getNearestCharacter(this, current);
-
-            // Check if the distance between the current ninja and the cowboy is less than or equal to 42
-            if (tmp->distance(current) <= 42)
-            {
-                // Update the closest ninja if it is nullptr or if the current ninja has lower hit points
-                if (closest == nullptr || (minDistance->m_hitPoints > tmp->m_hitPoints))
-                {
-                    closest = tmp;
-                    minDistance = tmp;
+        if (current != nullptr && typeid(*current) != typeid(Cowboy) && current->isAlive()) {
+            Character *temp = getNearestCharacter(this, current);
+            if (temp->distance(current) <= 42) {
+                if (closest == nullptr || (minDistance->getHitPoints() > temp->getHitPoints())) {
+                    closest = current;
+                    minDistance = temp;
                 }
             }
         }
     }
 
     return closest;
+}
+
+int SmartTeam::getCountNinjasAlive()
+{
+   int alive_count = 0;
+    for (size_t i = 0; i < S_MAX_TEAM_SIZE; i++) {
+        Character *teammate = getTeamMember(i);
+        if (teammate != nullptr && typeid(*teammate) == typeid(Cowboy) && teammate->isAlive()) {
+            alive_count++;
+        }
+    }
+    return alive_count;
+
 }

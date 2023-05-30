@@ -3,9 +3,9 @@
 #include "Ninja.hpp"
 namespace ariel
 {
-	// Static members
-	static const int S_SPEED_TRAINED = 12;
-	static const int S_INTIAL_HITPOINTS_TRAINED = 120;
+
+	 const int S_SPEED_TRAINED = 12;
+	 const int S_INTIAL_HITPOINTS_TRAINED = 120;
 	/**
 	 * @brief The TrainedNinja class represents a trained ninja character.
 	 *

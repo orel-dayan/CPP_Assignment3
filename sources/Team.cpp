@@ -6,18 +6,23 @@ using namespace ariel;
 
 Team::Team(Character *leader) : m_teammates{nullptr}, m_numsOfTeammate(0), m_leader(leader)
 {
-
-    if (leader == nullptr) // Check if the leader argument is null
-        throw std::invalid_argument("Error: NULL argument\n");
-
-    if (leader->m_inTeam) // Check if the leader is already in a team
-        throw std::runtime_error("Error: Character is already in a team\n");
-
-    // Initialize the teammates array with null pointers
-    std::fill(m_teammates.begin(), m_teammates.end(), nullptr);
-    // Add the leader to the team and increment the number of teammates
-    m_teammates[m_numsOfTeammate++] = leader;
+  if(leader == nullptr) // Check if the leader argument is null
+    throw std::invalid_argument("Error: NULL argument\n");
+   if (leader->isInTeam()) // Check if the leader is already in a team
+        throw std::runtime_error("Character is already in a team\n");
+    m_teammates[m_numsOfTeammate++] = leader; // Add the leader to the team and increment the number of teammates
     leader->addToTeam();
+
+}
+
+int Team::getNumOfTeammate() const
+{
+    return m_numsOfTeammate; // Return the number of teammates
+}
+
+std:: array<Character *, S_MAX_TEAM_SIZE> Team::getTeam() const
+{
+    return m_teammates; // Return the team
 }
 
 void Team::updateLeader()
@@ -34,7 +39,7 @@ void Team::add(Character *teammate)
     if (m_numsOfTeammate == S_MAX_TEAM_SIZE)// Check if the team is full
         throw std::runtime_error("The team is already full\n");
 
-    if (teammate->m_inTeam) // Check if the teammate is already in a team
+    if (teammate->isInTeam()) // Check if the teammate is already in a team
         throw std::runtime_error("Character is already in a team\n");
 
     m_teammates[m_numsOfTeammate++] = teammate; // Add the teammate to the team and increment the number of teammates
@@ -120,10 +125,11 @@ Character *Team::getNearestCharacter(const Team *source, const Character *dest)
     {
         current = source->m_teammates[i]; // Get the current character
         if (current == nullptr) // Check if the current character is null then continue
-            continue;
-
+           break;
+        if(source-> stillAlive() == 1 && current->isAlive()) // Check if the current character is the only alive teammate
+            return current;
         double distance = dest->distance(current);
-        if (distance < min && current->isAlive())
+        if (distance < min && current->isAlive()) // Check if the current character is alive and closer than the min distance
         {
             charcterCloset = source->m_teammates[i];
             min = distance; // Update the min distance

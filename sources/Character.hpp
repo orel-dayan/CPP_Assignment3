@@ -27,11 +27,12 @@ namespace ariel
 		{
 		}
 
-	public:
-		const std::string m_name; // The name of the character.
+		private:
+		std::string m_name; // The name of the character.
 		Point m_location;					// The location of the character.
 		int m_hitPoints;					// The hit points of the character.
-		bool m_inTeam;						// Indicates whether the character is in a team.
+		bool m_inTeam;				// Indicates whether the character is in a team.
+		public:
 
 		/**
 		 * @brief Deleted copy constructor, assignment operator, move constructor, and move assignment operator,
@@ -56,6 +57,15 @@ namespace ariel
 		const std::string &getName() const
 		{
 			return m_name;
+		}
+
+		bool isInTeam() const
+		{
+			return m_inTeam;
+		}
+		void setLoc(const Point loc)
+		{
+			m_location = loc;
 		}
 
 		/**

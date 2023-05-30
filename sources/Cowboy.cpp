@@ -12,10 +12,10 @@ std::string Cowboy ::print() const
 	}
 	else
 	{
-		pname = m_name;
-		phitpoints = "Hit points: " + std::to_string(m_hitPoints);
+		pname = getName();
+		phitpoints = "Hit points: " + std::to_string(getHitPoints());
 	}
-    return "Name: C. " + pname + ", " + phitpoints + ", Location: " + m_location.print();
+    return "Name: C. " + pname + ", " + phitpoints + ", Location: " + getLocation().print() ;
 }
 
 void Cowboy::reload()
@@ -27,8 +27,7 @@ void Cowboy::reload()
 
 void Cowboy::attack(Character *enemy)
 {
-	if (isAlive() == false) // If the cowboy is dead, return without attacking
-		return;
+
 	if (hasboolets()) // If the cowboy has bullets, shoot the enemy
 		shoot(enemy);
 	else // If the cowboy has no bullets, reload

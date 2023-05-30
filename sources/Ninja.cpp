@@ -13,19 +13,19 @@ std::string Ninja::print() const
     }
     else
     {
-        pname = m_name;
-        phitpoints = "Hit points: " + std::to_string(m_hitPoints);
+        pname = getName();
+        phitpoints = "Hit points: " + std::to_string(getHitPoints());
     }
 
-    return "Name: N. " + pname + ", " + phitpoints + ", Location: " + m_location.print();
+    return "Name: N. " + pname + ", " + phitpoints + ", Location: " + getLocation().print();
 }
 
 void Ninja::move(const Character *enemy)
 {
     if (isAlive())
     {
-        Point point_closest = Point::moveTowards(this->m_location, enemy->m_location, this->m_speed);
-        m_location = point_closest;
+        Point point_closest = Point::moveTowards(this->getLocation(), enemy->getLocation(), this->m_speed);
+        this->setLoc(point_closest);
     }
 }
 

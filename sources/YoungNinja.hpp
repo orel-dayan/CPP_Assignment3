@@ -2,9 +2,9 @@
 #include "Ninja.hpp"
 namespace ariel
 {
-    // Static members
-    static const int S_SPEED_YOUNG = 14;
-    static const int S_INTIAL_HITPOINTS_YOUNG = 100;
+   
+     const int S_SPEED_YOUNG = 14;
+     const int S_INTIAL_HITPOINTS_YOUNG = 100;
      /**
      * @brief The YoungNinja class represents a young ninja character.
      *
