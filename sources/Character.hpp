@@ -58,11 +58,23 @@ namespace ariel
 		{
 			return m_name;
 		}
+		/**
+		 * @brief method to check if the character is in team
+		 *
+		 * @return true
+		 * @return false
+		 */
 
 		bool isInTeam() const
 		{
 			return m_inTeam;
 		}
+
+		/**
+		 * @brief Set the Loc object of the character
+		 *
+		 * @param loc
+		 */
 		void setLoc(const Point loc)
 		{
 			m_location = loc;
@@ -108,6 +120,7 @@ namespace ariel
 		 * @param other The other character.
 		 * @return The distance between the characters.
 		 */
+		
 		double distance(Character *other) const;
 
 		/**

@@ -37,7 +37,7 @@ namespace ariel
 
 		Character *closetTarget(Team *enemy) const; // NOLINT
 
-			std::array<Character *, S_MAX_TEAM_SIZE> getTeam() const; // NOLINT
+		std::array<Character *, S_MAX_TEAM_SIZE> getTeam() const; // NOLINT
 
 	public:
 
